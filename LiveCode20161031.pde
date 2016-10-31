@@ -28,17 +28,18 @@ class Layer {
   float a, px, py, pz, dx, dy, dz;
   PShape shape;
   int imgIndex;
-  float MAX_DIST = 200;
+  float MAX_PERIOD = 3;
+  float RAD = 300;
 
   Layer() {
     a = random(TWO_PI);
     dx = random(-.02, .02);
-    px = random(-MAX_DIST, MAX_DIST);
-    py = random(-MAX_DIST, MAX_DIST);
-    pz = random(-MAX_DIST, MAX_DIST);
+    px = random(-MAX_PERIOD, MAX_PERIOD);
+    py = random(-MAX_PERIOD, MAX_PERIOD);
+    pz = random(-MAX_PERIOD, MAX_PERIOD);
     imgIndex = (int)random(img.length);
   }
-  
+
   float SZ = 200;
   float TSZ = 10;
   void draw() {
@@ -48,14 +49,18 @@ class Layer {
       shape.beginShape(QUAD);
       shape.textureMode(NORMAL);
       shape.texture(img[imgIndex]);
-      shape.vertex(-SZ, -SZ, 0, -TSZ, -TSZ);
-      shape.vertex(-SZ, SZ, 0, -TSZ, TSZ);
-      shape.vertex(SZ, SZ, 0, TSZ, TSZ);
-      shape.vertex(SZ, -SZ, 0, TSZ, -TSZ);
+      for (y = -SZ; y < SZ; y += SZ / 20) {
+        for (x = -SZ; x < SZ; y += SZ / 20) {
+          shape.vertex(x, y, 0, 0, 0);
+          shape.vertex(x, y + SZ / 20, 0, 0, 1);
+          shape.vertex(x + SZ / 20, y + SZ / 20, 0, 1, 1);
+          shape.vertex(x + SZ / 20, y, 0, 1, 0);
+        }
+      }
       shape.endShape();
     }
     pushMatrix();
-    translate(cos(a * px), cos(a * py), cos(a* pz));
+    translate(RAD * cos(a * px), RAD * cos(a * py), RAD * cos(a* pz));
     shape(shape);
     popMatrix();
   }
