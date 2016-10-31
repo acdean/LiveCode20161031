@@ -47,7 +47,7 @@ class Layer {
     py = random(-MAX_PERIOD, MAX_PERIOD);
     pz = random(-MAX_PERIOD, MAX_PERIOD);
     imgIndex = (int)random(img.length);
-    colour = color((int)random(128, 256), (int)random(128, 256), (int)random(128, 256));
+    colour = color((int)random(128, 192), (int)random(128, 192), (int)random(128, 192));
   }
 
   float SZ = 200;
