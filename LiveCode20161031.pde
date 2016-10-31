@@ -1,18 +1,21 @@
+// 20161031 Halloween Layers
+// acd
+
 import peasy.*;
-import peasy.org.apache.commons.math.*;
-import peasy.org.apache.commons.math.geometry.*;
-import peasy.test.*;
 import com.jogamp.opengl.*;  // new jogl - 3.0b7
 
 PeasyCam cam;
-PImage[] img = new PImage[2];
+PImage[] img = new PImage[3];
 Layer layer0, layer1, layer2;
+boolean video = false;
 
 void setup() {
-  size(640, 480, OPENGL);
+  size(640, 360, OPENGL);
   cam = new PeasyCam(this, 100);
   img[0] = loadImage("pumpkin.png");
   img[1] = loadImage("skull.png");
+  img[2] = loadImage("ghost.png");
+  colorMode(HSB, 360, 100, 100);
   layer0 = new Layer();
   layer1 = new Layer();
   layer2 = new Layer();
@@ -30,6 +33,13 @@ void draw() {
   layer0.draw();
   layer1.draw();
   layer2.draw();
+  
+  if (video) {
+    saveFrame("frame#####.png");
+    if (frameCount > 500) {
+      exit();
+    }
+  }
 }
 
 class Layer {
@@ -38,41 +48,49 @@ class Layer {
   int imgIndex;
   float MAX_PERIOD = 2;
   float RAD = 30;
-  int colour;
+  color colour;
 
   Layer() {
-    a = random(TWO_PI);
-    dx = random(-.02, .02);
+    a = random(TWO_PI); // angle
+    dx = random(-.02, .02); // change of angle
     px = random(-MAX_PERIOD, MAX_PERIOD);
     py = random(-MAX_PERIOD, MAX_PERIOD);
     pz = random(-MAX_PERIOD, MAX_PERIOD);
     imgIndex = (int)random(img.length);
-    colour = color((int)random(64, 192), (int)random(64, 192), (int)random(64, 192));
+    colour = color((int)random(360), 100, 100);
   }
 
-  int SZ = 150;
-  float TSZ = 10;
+  int TSZ = 40;
+  int SZ = TSZ * 10;
   void draw() {
     a += dx;
     if (shape == null) {
+      // just a plane of textures
       shape = createShape();
       shape.beginShape(QUAD);
       shape.textureMode(NORMAL);
       shape.texture(img[imgIndex]);
       shape.tint(colour);
-      for (int y = -SZ; y < SZ; y += 20) {
-        for (int x = -SZ; x < SZ; x += 20) {
+      for (int y = -SZ; y < SZ; y += TSZ) {
+        for (int x = -SZ; x < SZ; x += TSZ) {
           shape.vertex(x, y, 0, 0, 0);
-          shape.vertex(x, y + 20, 0, 0, 1);
-          shape.vertex(x + 20, y + 20, 0, 1, 1);
-          shape.vertex(x + 20, y, 0, 1, 0);
+          shape.vertex(x, y + TSZ, 0, 0, 1);
+          shape.vertex(x + TSZ, y + TSZ, 0, 1, 1);
+          shape.vertex(x + TSZ, y, 0, 1, 0);
         }
       }
       shape.endShape();
     }
     pushMatrix();
+    // lissajous
     translate(RAD * cos(a * px), RAD * cos(a * py), RAD * .5 * cos(a* pz));
     shape(shape);
     popMatrix();
+  }
+}
+
+void keyPressed() {
+  if (key == 's') {
+    saveFrame("frame####.png");
   }
 }
