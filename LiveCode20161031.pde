@@ -37,7 +37,7 @@ class Layer {
   PShape shape;
   int imgIndex;
   float MAX_PERIOD = 2;
-  float RAD = 300;
+  float RAD = 30;
   int colour;
 
   Layer() {
@@ -50,7 +50,7 @@ class Layer {
     colour = color((int)random(128, 192), (int)random(128, 192), (int)random(128, 192));
   }
 
-  float SZ = 100;
+  int SZ = 100;
   float TSZ = 10;
   void draw() {
     a += dx;
@@ -71,7 +71,7 @@ class Layer {
       shape.endShape();
     }
     pushMatrix();
-    translate(50 * cos(a * px), 50 * cos(a * py), 20 * cos(a* pz));
+    translate(RAD * cos(a * px), RAD * cos(a * py), RAD * cos(a* pz));
     shape(shape);
     popMatrix();
   }
