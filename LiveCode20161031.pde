@@ -49,8 +49,8 @@ class Layer {
       shape.beginShape(QUAD);
       shape.textureMode(NORMAL);
       shape.texture(img[imgIndex]);
-      for (y = -SZ; y < SZ; y += SZ / 20) {
-        for (x = -SZ; x < SZ; y += SZ / 20) {
+      for (int y = -SZ; y < SZ; y += SZ / 20) {
+        for (int x = -SZ; x < SZ; y += SZ / 20) {
           shape.vertex(x, y, 0, 0, 0);
           shape.vertex(x, y + SZ / 20, 0, 0, 1);
           shape.vertex(x + SZ / 20, y + SZ / 20, 0, 1, 1);
