@@ -10,7 +10,7 @@ Layer layer0, layer1, layer2;
 
 void setup() {
   size(640, 480, OPENGL);
-  cam = new PeasyCam(this, 200);
+  cam = new PeasyCam(this, 100);
   img[0] = loadImage("pumpkin.png");
   img[1] = loadImage("skull.png");
   layer0 = new Layer();
@@ -47,7 +47,7 @@ class Layer {
     py = random(-MAX_PERIOD, MAX_PERIOD);
     pz = random(-MAX_PERIOD, MAX_PERIOD);
     imgIndex = (int)random(img.length);
-    colour = color((int)random(128, 192), (int)random(128, 192), (int)random(128, 192));
+    colour = color((int)random(64, 192), (int)random(64, 192), (int)random(64, 192));
   }
 
   int SZ = 100;
@@ -71,7 +71,7 @@ class Layer {
       shape.endShape();
     }
     pushMatrix();
-    translate(RAD * cos(a * px), RAD * cos(a * py), RAD * cos(a* pz));
+    translate(RAD * cos(a * px), RAD * cos(a * py), RAD * .5 * cos(a* pz));
     shape(shape);
     popMatrix();
   }
