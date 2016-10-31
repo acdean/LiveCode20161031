@@ -50,7 +50,7 @@ class Layer {
     colour = color((int)random(128, 192), (int)random(128, 192), (int)random(128, 192));
   }
 
-  float SZ = 200;
+  float SZ = 100;
   float TSZ = 10;
   void draw() {
     a += dx;
@@ -60,8 +60,8 @@ class Layer {
       shape.textureMode(NORMAL);
       shape.texture(img[imgIndex]);
       shape.tint(colour);
-      for (int y = -200; y < 200; y += 20) {
-        for (int x = -200; x < 200; x += 20) {
+      for (int y = -SZ; y < SZ; y += 20) {
+        for (int x = -SZ; x < SZ; x += 20) {
           shape.vertex(x, y, 0, 0, 0);
           shape.vertex(x, y + 20, 0, 0, 1);
           shape.vertex(x + 20, y + 20, 0, 1, 1);
