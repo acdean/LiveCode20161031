@@ -28,13 +28,14 @@ class Layer {
   float a, px, py, pz, dx, dy, dz;
   PShape shape;
   int imgIndex;
+  float MAX_DIST = 200;
 
   Layer() {
     a = random(TWO_PI);
     dx = random(-.02, .02);
-    px = random(-2, 2);
-    py = random(-2, 2);
-    pz = random(-2, 2);
+    px = random(-MAX_DIST, MAX_DIST);
+    py = random(-MAX_DIST, MAX_DIST);
+    pz = random(-MAX_DIST, MAX_DIST);
     imgIndex = (int)random(img.length);
   }
   
@@ -47,10 +48,10 @@ class Layer {
       shape.beginShape(QUAD);
       shape.textureMode(NORMAL);
       shape.texture(img[imgIndex]);
-      shape.vertex(-SZ, -SZ, -TSZ, -TSZ);
-      shape.vertex(-SZ, SZ, -TSZ, TSZ);
-      shape.vertex(SZ, SZ, TSZ, TSZ);
-      shape.vertex(SZ, -SZ, TSZ, -TSZ);
+      shape.vertex(-SZ, -SZ, 0, -TSZ, -TSZ);
+      shape.vertex(-SZ, SZ, 0, -TSZ, TSZ);
+      shape.vertex(SZ, SZ, 0, TSZ, TSZ);
+      shape.vertex(SZ, -SZ, 0, TSZ, -TSZ);
       shape.endShape();
     }
     pushMatrix();
