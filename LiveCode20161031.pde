@@ -50,7 +50,7 @@ class Layer {
     colour = color((int)random(64, 192), (int)random(64, 192), (int)random(64, 192));
   }
 
-  int SZ = 100;
+  int SZ = 150;
   float TSZ = 10;
   void draw() {
     a += dx;
